@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.icon_text{
+  -webkit-text-stroke: 1px #fff;
+  -webkit-text-fill-color: transparent;
+}
+.slow{
+  transition: transform 4s , left 4s;
+}
+.text{
+  direction: rtl;
+}
+.updated_menu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+.hiddenClass{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s;
+  padding: 0rem;
+}
+.showClass{
+  max-height: 500px;
+  transition: max-height 0.5s;
+  padding: .75rem;
+}
+
+.noneDisplay{
+  display: none;
+  transition: .7s display;
+}
+
+.flexDisplay{
+  display: flex;
+  transition: .7s display;
+}
+
+.hiddenClass{
+  display: none !important;
+}
+
+.flexClass{
+  display: flex !important;
+}
+.textheading{
+  transition : 1s ease;
+}
+
+.textheading::after{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #fff;
+  height: 1px;
+}
+.itemanimate{
+  animation: animatCircle 4s infinite ease;
+  border-right-color: beige;
+}
+
+@keyframes animatCircle {
+  100%{
+    transform: rotate(360deg);
+  }
+}
+.navLinks{
+  background-color: #bebdbd;
+  /* backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); */
+  border: 1px solid #bebdbd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-items: center; */
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 100px;
+  transition: 1s ease all;
+}
+.bio{
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
