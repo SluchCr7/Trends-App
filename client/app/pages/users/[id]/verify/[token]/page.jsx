@@ -1,26 +1,24 @@
 'use client'
-import { VerifecationEmail } from '@/app/redux/apiCalls/registercall';
+import { verifyContext } from '@/app/context/VerifyContext';
+// import { VerifecationEmail } from '@/app/redux/apiCalls/registercall';
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { FaCircleCheck } from "react-icons/fa6";
-import { useDispatch , useSelector } from 'react-redux';
 const page = ({ params }) => {
-    const dispatch = useDispatch()
-    const { isEmailVerify } = useSelector(state => state.register)
-    const id = params.id
-    const token = params.token
+    const {id ,token} = params
+    const { verifyStatus, verifyAccount } = useContext(verifyContext)
     useEffect(() => {
-        dispatch(VerifecationEmail(id , token))
-    }, [id, token])
-    useEffect(() => {
-        console.log(isEmailVerify)
-    } , [isEmailVerify])
+        if (!verifyStatus) {
+            verifyAccount(id , token)
+        }
+    },[id , token])
+    const initail = true
 return (
     <>
         <div className='bg-black w-full min-h-[100vh] flex flex-col items-center justify-center gap-3'>
             <div className='flex items-center justify-center flex-col gap-3'>
                 {
-                    isEmailVerify 
+                    initail
                         ?
                         <>
                         <span className='text-green-700 text-4xl'><FaCircleCheck /></span>

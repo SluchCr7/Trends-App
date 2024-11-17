@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 const BottomSide = () => {
   const {user} = useSelector((state) => state.auth)
   return (
-    <div className='fixed bottom-0 md:hidden  px-7 py-3 w-[100%]'>
+    <div className='fixed bottom-0 md:hidden px-7 py-3 w-[85%] rounded-tl-md rounded-tr-md bg-[#171717] border-t-[1px] translate-x-[-50%] left-1/2 right-1/2 mx-auto border-white/10'>
       <div className='flex items-center justify-between w-[100%] gap-5 bg-transparent backdrop-blur-xl'>
           <Link href={'/'} className={`text-3xl font-black text-primary`}><MdHomeFilled /></Link>
           <Link href={'/pages/search'} className={`text-3xl font-semibold text-white`}><CiSearch /></Link>

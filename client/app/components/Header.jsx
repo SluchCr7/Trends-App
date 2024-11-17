@@ -47,7 +47,7 @@ return (
         <div className='Logo'>
             <Link href={"/"}><Image src={"/logo.svg"} alt="logo" width={30} height={30} /></Link>
         </div>
-        <span className='text-lg text-primary font-bold uppercase tracking-[3px]'>
+        <span className='text-lg hidden md:flex text-primary font-bold uppercase tracking-[3px]'>
             Trendes
         </span>
         {
@@ -58,15 +58,17 @@ return (
                             user?.isAdmin &&
                             <Link href={'/pages/dashboard'} className='text-lg text-primary font-bold'><MdDashboard /></Link>
                         }
-                        <Image onClick={() => setShow(!show)} src={user.profilePhoto.url} alt="logo" width={100} height={100} className='w-[40px] h-[40px] rounded-full' />
-                        <div className={`${show ? 'flex' : 'hidden'} flex flex-col items-start w-[200px] border-[1px] border-primary absolute top-[3.25rem] left-[-10rem]`}>
-                            <Link href={`/pages/Profile/${user._id}`} className='flex flex-row w-full justify-between p-3 items-center hover:bg-[#181818] transition-all duration-700'>
-                                <span className='text-sm text-primary font-bold'>Profile</span>
-                                <span className='text-sm text-primary font-bold'><FaCircleUser /></span>
-                            </Link>
-                            <div onClick={handleLogout} className='flex flex-row w-full justify-between p-3 items-center hover:bg-[#181818] transition-all duration-700'>
-                                <span className='text-sm text-primary font-bold'>Logout</span>
-                                <span className='text-sm text-primary font-bold'><CiLogout /></span>
+                        <div className='relative'>               
+                            <Image onClick={() => setShow(!show)} src={user.profilePhoto.url} alt="logo" width={100} height={100} className='w-[40px] h-[40px] rounded-full' />
+                            <div className={`${show ? 'flex' : 'hidden'} flex flex-col items-start w-[200px] bg-white shadow-xl absolute top-[3.25rem] right-[-40%]`}>
+                                <Link href={`/pages/Profile/${user._id}`} className='flex flex-row w-full justify-between p-3 items-center hover:bg-[#181818] transition-all duration-700'>
+                                    <span className='text-sm text-primary font-bold'>Profile</span>
+                                    <span className='text-sm text-primary font-bold'><FaCircleUser /></span>
+                                </Link>
+                                <div onClick={handleLogout} className='flex flex-row w-full justify-between p-3 items-center hover:bg-[#181818] transition-all duration-700'>
+                                    <span className='text-sm text-primary font-bold'>Logout</span>
+                                    <span className='text-sm text-primary font-bold'><CiLogout /></span>
+                                </div>
                             </div>
                         </div>
                     </div> 

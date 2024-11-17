@@ -7,6 +7,10 @@ import { Provider } from 'react-redux';
 import store from '../redux/Store';
 import Login from './Login';
 import Register from './Register';
+import LikeContextProvider from '../context/LikeContext';
+import CommentContextProvider  from '../context/CommentContext';
+import PostContextProvider from '../context/PostContext';
+import VerifyContextProvider from '../context/VerifyContext';
 const Homecontent = ({ children }) => {
     const [open, setOpen] = React.useState(false)
     const [title, setTitle] = useState("Home")
@@ -23,16 +27,24 @@ const Homecontent = ({ children }) => {
   }, [])
   return (
     <div>
-        <Provider store={store}>
-          <div className={`${open ? "" : ""}`}>
-          <Header title={title} setLogin={setLogin} login={login} setRegister={setRegister} Register={register} />
-              <Login login={login} setLogin={setLogin} register={register} setRegister={setRegister} />
-              <Register register={register} setRegister={setRegister} setLogin={setLogin} login={login} />
-              <Leftsidebar setOpen={setOpen} open={open} display={display}/>
-              {children}
-              <BottomSide setOpen={setOpen} open={open} />
-          </div>
-        </Provider>
+      <Provider store={store}>
+        <CommentContextProvider>
+          <LikeContextProvider>
+            <PostContextProvider>
+              <VerifyContextProvider>
+                  <div className={`${open ? "" : ""}`}>
+                    <Header title={title} setLogin={setLogin} login={login} setRegister={setRegister} Register={register} />
+                    <Login login={login} setLogin={setLogin} register={register} setRegister={setRegister} />
+                    <Register register={register} setRegister={setRegister} setLogin={setLogin} login={login} />
+                    <Leftsidebar setOpen={setOpen} open={open} display={display}/>
+                    {children}
+                    <BottomSide setOpen={setOpen} open={open} />
+                  </div>
+              </VerifyContextProvider>
+            </PostContextProvider>
+          </LikeContextProvider>
+        </CommentContextProvider >
+      </Provider>
     </div>
   )
 }

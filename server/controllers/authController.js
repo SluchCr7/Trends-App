@@ -34,20 +34,19 @@ const registerUser = AsyncHandler(async (req, res) => {
     })
 
     await user.save();
-    // const newVerificationToken = new Verification({
-    //     userId: user._id,
-    //     tokenVer : crypto.randomBytes(32).toString("hex")
-    // })
-    // await newVerificationToken.save()
-    // // Generate Link
-    // const link = `http://localhost:3000/pages/users/${user._id}/verify/${newVerificationToken.tokenVer}`
-    // const htmlTemp = `
-    //     <div>
-    //         <p>Click now and Verify your Email</p>
-    //         <a href=${link}>Verify Now</a>
-    //     </div>
-    // `
-    // await sendEmail(user.email , "Verify your Email" , htmlTemp)
+    const newVerificationToken = new Verification({
+        userId: user._id,
+        tokenVer : crypto.randomBytes(32).toString("hex")
+    })
+    await newVerificationToken.save()
+    // Generate Link
+    const link = `http://localhost:3000/pages/users/${user._id}/verify/${newVerificationToken.tokenVer}`
+    const htmlTemp = `
+        Verify your email by:
+        click in this link <a href=${link}>Verify</a> to verify your email
+        and go to the login page and start Shopping and enjoy
+    `
+    await sendEmail(user.email , "Verify your Email" , htmlTemp)
 
     res.status(201).json({ message: "we sent an email now , go to verify your email" });
 });
@@ -71,10 +70,10 @@ const LoginUser = AsyncHandler(async (req, res) => {
         return res.status(400).send("Invalid email or password");
     }
 
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) {
-        return res.status(400).send("Invalid email or password");
-    }
+    // const validPassword = await bcrypt.compare(req.body.password, user.password);
+    // if (!validPassword) {
+    //     return res.status(400).send("Invalid email or password");
+    // }
 
     // // Verify Account
     // if (!user.isAccountVerified) {
@@ -87,10 +86,9 @@ const LoginUser = AsyncHandler(async (req, res) => {
     //     }
     //     const link = `http://localhost:3000/pages/users/${user._id}/verify/${verifcationToken.tokenVer}`
     //     const htmlTemp = `
-    //         <div>
-    //             <p>Click now and Verify your Email</p>
-    //             <a href=${link}>Verify Now</a>
-    //         </div>
+    //         Verify your email by:
+    //         click in this link <a href=${link}>Verify</a> to verify your email
+    //         and go to the login page and start Shopping and enjoy
     //     `
     //     await sendEmail(user.email , "Verify your Email" , htmlTemp)
     //     return res.status(400).send("Please Verify your Email");

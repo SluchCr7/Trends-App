@@ -10,7 +10,7 @@ export const LoginUser = (user) => {
             dispatch(authAction.login(data))
             localStorage.setItem("UserInfo", JSON.stringify(data))
         } catch (error) {
-            toast.error(error.response.data.message)
+            // toast.error(error.response)
             console.log(error)
         }
     }

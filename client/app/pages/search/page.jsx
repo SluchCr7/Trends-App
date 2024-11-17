@@ -33,7 +33,7 @@ const page = () => {
   }
   return (
     <div className='w-full min-h-[100vh] flex flex-col items-center gap-3'>
-      <div className='w-[650px]  h-[100vh] p-5 rounded-[10px]'>
+      <div className='w-[90%] md:w-[650px] h-[100vh] p-5 rounded-[10px]'>
         <input value={searchQuery} onChange={handleInput}
           type="text" placeholder='Search'
           className='w-[100%] bg-[#949494] outline-none text-black rounded-lg p-2 pl-5'

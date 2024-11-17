@@ -9,7 +9,7 @@ export const RegisterUser = (user) => {
             dispatch(registerAction.Setregister(data.message))
             console.log(data)
         } catch (error) {
-            toast.error(error.response.data.message)
+            toast.error(error.response.data)
         }
     }
 }

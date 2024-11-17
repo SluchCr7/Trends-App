@@ -37,7 +37,7 @@ return (
     <div className={`w-full min-h-[100vh] flex flex-col items-center gap-3 `}>
         <div className='flex items-center flex-col gap-4 justify-center min-h-[60vh] w-full'>
             <span className='text-xl text-primary font-black uppercase tracking-[3px]'>New Trend</span>
-            <form onSubmit={handlecontent} className='w-[600px] bg-[#181818] p-8 rounded-xl flex flex-col items-start gap-6'>
+            <form onSubmit={handlecontent} className='md:w-[600px] w-[80%] bg-[#181818] p-8 rounded-xl flex flex-col items-start gap-6'>
                 <div className='cre-post flex items-center gap-5 w-full'>
                     <Image width={100} height={100} alt='profilePhoto' src={user.profilePhoto.url}
                             className='w-[50px] h-[50px] rounded-full'/>

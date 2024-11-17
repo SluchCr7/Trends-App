@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import UpdatedMenuProfile from '@/app/components/UpdatedMenuProfile'
 import UpdatePost from '@/app/components/UpdatePost'
@@ -20,6 +20,8 @@ import swal from 'sweetalert'
 import axios from 'axios';
 import Moment from 'react-moment';
 import AccountInfo from '@/app/components/AccountInfo'
+import { Postcontext } from '@/app/context/PostContext'
+import { likeContext } from '@/app/context/LikeContext'
 const page = ({ params }) => {
     const { user } = useSelector(state => state.auth)
     const Id = params.id
@@ -35,7 +37,9 @@ const page = ({ params }) => {
     const [postUpdate, setPostUpdate] = useState(false)
     const [content, setContent] = useState("")
     const [postId, setPostId] = useState("")
-    const [info , setInfo] = useState(false)
+    const [info, setInfo] = useState(false)
+    const { deletePost } = useContext(Postcontext)
+    const { HandleLike } = useContext(likeContext)
     useEffect(() => {
         dispatch(ProfileGetData(Id))
         setLoading(true)
@@ -89,33 +93,33 @@ const page = ({ params }) => {
             }   
         });
     }
-    const deletePost = (PostId) => {
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this post!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                axios.delete(`http://localhost:3001/api/post/${PostId}`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization" : `Bearer ${user?.token}`
-                    }
-                })
-                    .then((res) => {
-                        if (res.status === 200) {
-                            window.location.reload()
-                        }
-                    })
-                    .catch((err) => {   
-                        console.log(err)
-                })
-            }   
-        });
-    }
+    // const deletePost = (PostId) => {
+    //     swal({
+    //         title: "Are you sure?",
+    //         text: "Once deleted, you will not be able to recover this post!",
+    //         icon: "warning",
+    //         buttons: true,
+    //         dangerMode: true,
+    //     })
+    //     .then((willDelete) => {
+    //         if (willDelete) {
+    //             axios.delete(`http://localhost:3001/api/post/${PostId}`, {
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     "Authorization" : `Bearer ${user?.token}`
+    //                 }
+    //             })
+    //                 .then((res) => {
+    //                     if (res.status === 200) {
+    //                         window.location.reload()
+    //                     }
+    //                 })
+    //                 .catch((err) => {   
+    //                     console.log(err)
+    //             })
+    //         }   
+    //     });
+    // }
     const handleEdit = (e) => {
         e.preventDefault()
         axios.put(`http://localhost:3001/api/post/${postId}`, {
@@ -133,8 +137,8 @@ const page = ({ params }) => {
             .catch((err) => {   
                 console.log(err)
             })
-        }
-        const UpdatePhoto = async (e) => {
+    }
+    const UpdatePhoto = async (e) => {
             e.preventDefault();
             const formData = new FormData();
             formData.append('image', image); 
@@ -158,16 +162,7 @@ const page = ({ params }) => {
                 console.error('Error uploading the file:', error);
             }
     }
-    const handleLike = (id) => {
-        axios.put(`http://localhost:3001/api/post/like/${id}` , {},{headers : {Authorization : `Bearer ${user.token}`}})
-            .then(res => {
-                toast.success("Post Liked")
-            })
-            .catch(err => {
-                console.log(err)
-                toast.error("Something went wrong")
-            })
-    }
+
 return (
     <>
     <ToastContainer />
@@ -186,13 +181,13 @@ return (
         handleEdit={handleEdit} setContent={setContent} content={content}
     />
     <div className={`w-full min-h-[100vh] flex flex-col items-center gap-3`}>
-        <div className='w-[650px] h-[100vh] p-5 py-8 rounded-[10px]'>
+        <div className='md:w-[650px] w-[80%] h-[100vh] p-5 py-8 rounded-[10px]'>
         {
             loading ? 
                 (
                     <div className='flex flex-col items-start gap-5'>
-                        <div className='flex w-full items-center justify-between'>
-                            <div className='flex flex-col items-start gap-1'>
+                        <div className='flex w-full flex-col-reverse md:flex-row items-center justify-center md:justify-between'>
+                            <div className='flex flex-col items-center md:items-start gap-1'>
                                 <span className='text-xl text-primary font-bold'>{profile?.name}</span>
                                 <span className='text-sm text-secondary font-bold'>{profile?.nameProfile}</span>
                             </div>
@@ -212,7 +207,7 @@ return (
                                 </form>
                             </div>
                         </div>
-                        <p className='text-sm text-black font-bold'>{profile?.bio}</p>
+                        <p className='text-sm text-black text-center md:text-left font-bold'>{profile?.bio}</p>
                         <div className='w-full flex items-center justify-between'>
                             <span className='text-sm text-primary font-bold'>{profile?.followers.length} <span className='font-black'>Follower</span></span>
                             <div className='relative'>
@@ -238,17 +233,17 @@ return (
                             </div>
                         </div>
                         <div className='w-full border-b-[1px] border-black pb-3 flex items-center justify-center'>
-                            <span className='text-base text-primary font-bold capitalize'>Threads</span>
+                            <span className='text-base text-primary font-bold capitalize'>Trends</span>
                         </div>
                         <div className='posts flex flex-col items-start gap-2 w-full'> 
                             {
                                 profile?.posts?.map((post) => (
-                                    <Link href={`/pages/post/${post?._id}`} key={post._id} className='w-full border-b-[1px] border-[#404040] pb-5'>
+                                    <div  key={post._id} className='w-full border-b-[1px] border-[#404040] pb-5'>
                                         <div className='flex items-start gap-3 w-full'>
                                             <Image src={profile?.profilePhoto.url} alt="logo" width={40} height={40} className='w-[50px] h-[50px] rounded-full' />
                                             <div className='flex flex-col items-start gap-1 w-full'>
-                                                <div className='flex items-center gap-2 justify-between w-full'>
-                                                    <div className='flex items-center gap-2'>
+                                                <div className='flex flex-col md:flex-row items-start md:items-center gap-2 justify-between w-full'>
+                                                    <div className='flex items-start md:items-center flex-col md:flex-row  gap-2'>
                                                         <span className='text-sm text-primary font-bold'>{profile?.name}</span>
                                                         <span className='text-xs text-[#b3b3b3]'>
                                                             <Moment fromNow> 
@@ -264,24 +259,27 @@ return (
                                                         <span onClick={() => deletePost(post._id)}><MdDelete className='text-xl text-primary cursor-pointer' /></span>
                                                     </div>
                                                 </div>
-                                                <span className='text-sm text-black font-bold'>{post.content}</span>
+                                                <Link href={`/pages/post/${post?._id}`} className='text-sm text-black font-bold'>{post.content}</Link>
                                                 <div className='flex items-center gap-5 mt-2'>
-                                                    <div onClick={() => handleLike(post._id)} className='flex items-center gap-2'>
+                                                    <button onClick={async () => {
+                                                        await HandleLike(post._id)
+                                                        window.location.reload()
+                                                    }} className='flex items-center gap-2'>
                                                         <span className='text-sm text-black '>{post.likes.length}</span>
                                                         <span className='text-base text-primary font-bold'>
                                                             {
                                                                 post.likes.includes(user?._id) ? <FaHeart className='text-red-500'/> : <CiHeart />
                                                             }
                                                         </span>
-                                                    </div>
-                                                    <div className='flex items-center gap-2'>
+                                                    </button>
+                                                    <Link href={`/pages/post/${post?._id}`} className='flex items-center gap-2'>
                                                         {/* <span className='text-sm text-white '>{post.comments.length}</span> */}
                                                         <span className='text-base text-primary font-bold'><FaRegComment /></span>
-                                                    </div>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 ))
                             }
                         </div>

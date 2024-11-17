@@ -3,7 +3,7 @@ import React from 'react'
 const UpdatedMenuProfile = ({updateMenu , handleUpdate , name , setname , setBio ,setnameProfile , bio ,nameProfile}) => {
   return (
     <div className={`updated_menu ${updateMenu ? "flex" : "hidden"}`}>
-        <form onSubmit={handleUpdate} className={`flex z-[1000] items-start absolute top-[30%] right-[50%] left-[50%] translate-x-[-50%] flex-col gap-4 w-[500px] border-[1px] border-primary p-5 bg-[#181818] rounded-xl`}>
+        <form onSubmit={handleUpdate} className={`flex z-[1000] items-start absolute top-[30%] right-[50%] left-[50%] translate-x-[-50%] flex-col gap-4 w-[85%] md:w-[450px] border-[1px] border-primary p-5 bg-[#181818] rounded-xl`}>
             <div className='flex items-start flex-col gap-2'>
                 <span className='text-sm text-primary font-bold'>UserName</span>
                 <input type="text" value={name} onChange={(e) => setname(e.target.value)} placeholder='Username' className='border-none w-[100%] bg-transparent text-white outline-none ' />
