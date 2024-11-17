@@ -34,7 +34,7 @@ const Homepage = () => {
         loading ?
         posts.map(({_id, content, user, postId, username, createdAt, updatedAt, __v , likes , comments} , index) => {
           return (
-            <Post _id={_id}  content={content} user={user} postId={postId} username={username} createdAt={createdAt}  likes={likes} comments={comments} index={index} />
+            <Post _id={_id} key={index}  content={content} user={user} postId={postId} username={username} createdAt={createdAt}  likes={likes} comments={comments} index={index} />
           )
         })
           :
