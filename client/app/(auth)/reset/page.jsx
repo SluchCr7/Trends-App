@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { MdOutlineEmail } from "react-icons/md";
 import { TbPassword } from "react-icons/tb";
