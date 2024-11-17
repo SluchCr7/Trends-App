@@ -4,7 +4,7 @@ const initialState = {
     user:
         typeof window !== "undefined" && localStorage?.getItem("UserInfo")
             ?
-            JSON.parse(localStorage.getItem("UserInfo")) || null
+            JSON.parse(localStorage.getItem("UserInfo"))
             : null,
 };
 
