@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import Image from 'next/image'
 import { useSelector } from 'react-redux';
-const page = () => {
+const Page = () => {
     const [content, setContent] = useState("")
     const { user } = useSelector((state) => state.auth)
     const handlecontent = (e) => {
@@ -55,4 +55,4 @@ return (
 )
 }
 
-export default page
+export default Page

@@ -43,7 +43,7 @@ const Login = ({login , setLogin , register , setRegister}) => {
                 </div>
                 <Link href={'/forgot'} className='text-xs text-start text-white '>Forgot Password</Link>
                 <button type='submit' className='border-[1px] border-primary hover:bg-primary hover:text-white transition-all duration-300 text-primary tracking-[2px] w-[80%] md:w-[120px] bg-transparent p-2 rounded-sm'>Login</button>
-                <span className='text-xs text-secondary'>Don't have an account? <span onClick={handleRegister} className='text-primary font-bold'>Sign Up</span></span>
+                <span className='text-xs text-secondary'>Don`&apos;`t have an account? <span onClick={handleRegister} className='text-primary font-bold'>Sign Up</span></span>
             </form>
             </div>
     </div>

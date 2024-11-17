@@ -4,13 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-const page = () => {
+const Page = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [data, setData] = useState([])
   const {user} = useSelector(state => state.auth)
-  useEffect(() => {
-    console.log(searchQuery)
-  }, [searchQuery])
   const handleChange = (query) => {
     axios.get('http://localhost:3001/api/auth/Users/search', {
       params : {name :query}
@@ -63,4 +60,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

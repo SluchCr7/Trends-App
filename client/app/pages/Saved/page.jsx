@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useEffect , useState } from 'react'
 import { useSelector } from 'react-redux'
 
-const page = () => {
+const Page = () => {
   let { user } = useSelector(state => state.auth)
   const [data, setData] = useState([])
   
@@ -27,4 +27,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

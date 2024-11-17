@@ -4,7 +4,7 @@ import { verifyContext } from '@/app/context/VerifyContext';
 import Link from 'next/link'
 import React, { useContext, useEffect } from 'react'
 import { FaCircleCheck } from "react-icons/fa6";
-const page = ({ params }) => {
+const Page = ({ params }) => {
     const {id ,token} = params
     const { verifyStatus, verifyAccount } = useContext(verifyContext)
     useEffect(() => {
@@ -36,4 +36,4 @@ return (
 )
 }
 
-export default page
+export default Page

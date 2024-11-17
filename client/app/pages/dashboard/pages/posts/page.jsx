@@ -7,7 +7,7 @@ import Moment from 'react-moment'
 import { MdDelete } from "react-icons/md";
 import { useSelector } from 'react-redux'
 // import deletePost from '@/app/utils/Getusers'
-const page = () => {
+const Page = () => {
   const [Posts, setPosts] = useState([])
   const {user} = useSelector(state => state.auth)
   useEffect(() => {
@@ -57,4 +57,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

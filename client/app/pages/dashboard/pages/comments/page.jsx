@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Moment from 'react-moment'
 import { MdDelete } from "react-icons/md";
 import { useSelector } from 'react-redux'
-const page = () => {
+const Page = () => {
     const [Comments , setComments] = useState([])
     const {user} = useSelector(state => state.auth)
     useEffect(() => {
@@ -55,4 +55,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

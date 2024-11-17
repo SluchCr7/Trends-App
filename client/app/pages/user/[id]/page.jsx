@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import Moment from 'react-moment';
 import AccountInfo from '@/app/components/AccountInfo';
 import { likeContext } from '@/app/context/LikeContext';
-const page = (props) => {
+const Page = (props) => {
     const id = props.params.id
     const [user, setUser] = useState({})
     const [menu , setMenu] = useState(false)
@@ -137,4 +137,4 @@ const page = (props) => {
     </>
   )
 }
-export default page
+export default Page

@@ -22,7 +22,7 @@ import Moment from 'react-moment';
 import AccountInfo from '@/app/components/AccountInfo'
 import { Postcontext } from '@/app/context/PostContext'
 import { likeContext } from '@/app/context/LikeContext'
-const page = ({ params }) => {
+const Page = ({ params }) => {
     const { user } = useSelector(state => state.auth)
     const Id = params.id
     const dispatch = useDispatch()
@@ -296,4 +296,4 @@ return (
   )
 }
 
-export default page
+export default Page

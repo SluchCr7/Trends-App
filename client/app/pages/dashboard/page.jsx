@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useEffect } from 'react';
 import axios from 'axios';
 
-const page = () => {
+const Page = () => {
     const [Users, setUsers] = useState([])
     const [Posts, setPosts] = useState([])
     const [Comments , setComment] = useState([])
@@ -63,4 +63,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { likeContext } from '@/app/context/LikeContext';
 import { Commentcontext } from '@/app/context/CommentContext';
 import { Postcontext } from '@/app/context/PostContext';
-const page = (props) => {
+const Page = (props) => {
   const id = props.params.id
   const { user } = useSelector((state) => state.auth)
   const [textcomment, setTextComment] = useState('')
@@ -139,4 +139,4 @@ const page = (props) => {
     </>
   )
 }
-export default page
+export default Page

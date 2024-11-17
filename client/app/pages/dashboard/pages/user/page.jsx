@@ -4,7 +4,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import swal from 'sweetalert'
-const page = () => {
+const Page = () => {
     const [users, setUsers] = useState([])
     const [bio , setBio] = useState(false)
     useEffect(() => {
@@ -75,4 +75,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
