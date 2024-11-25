@@ -4,6 +4,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { CiCircleInfo } from "react-icons/ci";
 import { IoIosLink } from "react-icons/io";
 
+
 const Menuoptions = ({menu , setMenu , setopenMenu , openMenu , setInfo}) => {
   return (
     <div className={`menu absolute top-5 flex-col items-start w-[200px] border-[1px]  left-[-10rem] bg-[#bebdbd] z-50 ${menu ?"showClass":"hiddenClass"}`}>

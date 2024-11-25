@@ -1,5 +1,5 @@
 const route = require('express').Router();
-const { createPost  ,toggleLike, DeletePost , getALLPosts , getPostById , UpdatePost} = require('../controllers/postcontroller')
+const { createPost  ,toggleLike, DeletePost , getALLPosts , getPostById , UpdatePost , pinPost , unPinPost} = require('../controllers/postcontroller')
 const {verifyToken , verifyAdmain , verifyAdmainUser , verifyUser} = require('../middelwares/verifyToken')
 route.route("/")
     .post(verifyToken, createPost)
@@ -10,4 +10,10 @@ route.route("/:id")
     .put(verifyToken , UpdatePost)
 route.route("/like/:id")
     .put(verifyToken, toggleLike)
+
+route.route("/pin/:id")
+    .put(verifyToken, pinPost)
+
+route.route("/unpin/:id")
+    .put(verifyToken, unPinPost)
 module.exports = route

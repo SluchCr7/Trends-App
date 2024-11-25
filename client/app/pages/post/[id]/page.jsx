@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { likeContext } from '@/app/context/LikeContext';
 import { Commentcontext } from '@/app/context/CommentContext';
 import { Postcontext } from '@/app/context/PostContext';
+import Loading from '@/app/components/Loading';
 const Page = (props) => {
   const id = props.params.id
   const { user } = useSelector((state) => state.auth)
@@ -63,7 +64,7 @@ const Page = (props) => {
                       </div>
                       <div className='flex relative items-center gap-1'>
                       <span onClick={()=> SetpostMenu(!postMenu)}><BsThreeDots className='text-black' /></span>
-                      {/* {
+                      {
                         user.name == post.user.name ?
                         <div className={`absolute top-4 left-[-20px] w-[200px] bg-black rounded-xl ${postMenu ? "flex" : "hidden"}`}>
                           <div className='flex flex-col items-start w-full'>
@@ -73,7 +74,7 @@ const Page = (props) => {
                             </div>
                           </div>
                         </div> : ""
-                      } */}
+                      }
                       </div>
                     </div>
                     <h1 className='text-secondary w-[100%] py-[20px] text'>{post.content}</h1>
@@ -91,7 +92,7 @@ const Page = (props) => {
                         <input value={textcomment} onChange={(e) => setTextComment(e.target.value)} type="text" placeholder='Write a comment' className='w-full md:w-[85%] bg-[#181818] outline-none text-white rounded-lg p-2 pl-5'/>
                         <button onClick={()=> AddComment(id , textcomment)} className='text-white w-[100%] md:w-[15%] bg-primary rounded-lg p-2'>Add</button>
                     </div>
-                    <div className="flex py-3 border-b-[1px] border-white/50 flex-col items-start  max-[400px]:flex-row max-[400px]:items-center justify-between w-full">
+                    <div className="flex py-3 border-b-[1px] border-white/50 flex-col items-start  md:flex-row md:items-center justify-between w-full">
                         <span className='text-secondary'>Replies</span>
                         <span onClick={() => setAll(!all)} className='text-primary text-sm'>View {all ? "few" : "All"}</span>
                     </div>  
@@ -130,9 +131,7 @@ const Page = (props) => {
               </>
               
               :
-              <div className='flex items-center justify-center w-full min-h-[100vh]'>
-                  <div className='w-[80px] itemanimate flex items-center justify-center h-[80px] border-[2px] border-primary rounded-full'></div>
-              </div> 
+              <Loading/>
           }
         </div>
     </div>

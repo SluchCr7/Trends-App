@@ -29,6 +29,7 @@ const sendResetPasswordLink = AsyncHandler(async (req, res) => {
             userId: user._id,
             token: crypto.randomBytes(32).toString("hex")
         })
+        await verificationToken.save()
     }
     const link = `http://localhost:3000/reset/${user._id}/${verificationToken.token}`
     const htmlTemp = `
@@ -39,3 +40,29 @@ const sendResetPasswordLink = AsyncHandler(async (req, res) => {
     `
     await sendEmail(user.email , "Reset Password" , htmlTemp)
 })
+
+const resetPassword = AsyncHandler(async (req, res) => {
+    const {error} = validateNewPassword(req.body)
+    if (error) {
+        return res.status(400).send(error.details[0].message)
+    }
+    const user = await User.findById(req.params.id)
+    if (!user) {
+        return res.status(400).send("Invalid User")
+    }
+    const verificationToken = await Verification.findOne({ userId: user._id })
+    if (!verificationToken) {
+        return res.status(400).send("Invalid User")
+    }
+    if (!user.isAccountVerified) {
+        user.isAccountVerified = true
+    }
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(req.body.password , salt)
+    user.password = hashedPassword
+    await Verification.findByIdAndDelete(verificationToken._id)
+    await user.save()
+    res.status(200).json({message : "Password Reset Successfully"})
+})
+
+module.exports = { sendResetPasswordLink , resetPassword }

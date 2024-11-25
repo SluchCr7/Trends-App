@@ -2,7 +2,6 @@ import { MdHomeFilled } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
-import { IoPerson } from "react-icons/io5";
 
 export const icons = [
     {
@@ -24,10 +23,5 @@ export const icons = [
         icon: <CiHeart />,
         text: "Favorite",
         link: "/favorite"
-    },
-    {
-        icon: <IoPerson />,
-        text: "Account",
-        link: "/account"
     },
 ]

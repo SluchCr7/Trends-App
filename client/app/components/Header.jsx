@@ -8,13 +8,14 @@ import {useSelector , useDispatch} from 'react-redux'
 import { LogoutUser } from '../redux/apiCalls/authapicall';
 import { MdDashboard } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
+import { usePathname } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
-const Header = ({login , setLogin , setRegister , register}) => {
+const Header = ({login , setLogin , setRegister}) => {
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
-    
+    const pathName = usePathname()
     const [show, setShow] = useState(false)
-    const [hide , setHide] = useState(false)
+    const [showNav , setShowNav] = useState(false)
     const handleLogout = () => {
         swal({
             title: "Are you sure?",
@@ -33,23 +34,22 @@ const Header = ({login , setLogin , setRegister , register}) => {
             })
             .catch(err => console.log(err))
     }
-    useEffect(() => {
-        if(window.location.href.includes("pages/dashboard")) setHide(true)
-    }, [])
+
     const handleLogin = () => {
         setLogin(!login)
         setRegister(false)
     }
+    useEffect(() => {
+        if (window.location.href.includes("users")) setShowNav(true)
+        else setShowNav(false)
+    },[])
 return (
     <>
     <ToastContainer />
-    <div className={`header sticky top-0 bg-[#bfc0c0]  ${hide ? 'hidden' : 'flex'} items-center w-full justify-between py-2 px-9 z-[999] border-[1px]  `}>
+    <div className={`header sticky top-0 bg-[#bfc0c0] ${showNav ? "hidden" : "flex"} items-center w-full justify-between py-2 px-9 z-[999] border-[1px]  `}>
         <div className='Logo'>
             <Link href={"/"}><Image src={"/logo.svg"} alt="logo" width={30} height={30} /></Link>
         </div>
-        <span className='text-lg hidden md:flex text-primary font-bold uppercase tracking-[3px]'>
-            Trendes
-        </span>
         {
             user ? 
                 <>

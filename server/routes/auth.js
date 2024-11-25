@@ -18,7 +18,7 @@ route.route("/follow/:id")
 route.route("/photo")
     .post(verifyToken, photoUpload.single("image"), uploadPhoto)
     
-route.route("/:userId/verify/:token")
+route.route("/:id/verify/:token")
     .get(verifyAccount)
 
 route.route("/Users/search")

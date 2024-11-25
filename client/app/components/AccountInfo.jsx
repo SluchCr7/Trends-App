@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import React from 'react'
-
-const AccountInfo = ({name , bio, nameProfile , date , img , info}) => {
+import { IoMdClose } from "react-icons/io";
+const AccountInfo = ({name , bio, nameProfile , date , img , info , setInfo}) => {
   return (
     <div className={`updated_menu ${info ? "flex" : "hidden"}`}>
       <div className='bg-white w-[85%] md:w-[430px] fixed top-1/2 left-1/2 rounded-lg p-6 translate-x-[-50%] translate-y-[-50%]'>
+        <span onClick={() =>setInfo(false)} className='absolute top-1 right-1 text-md text-black'><IoMdClose/></span>
         <div className='flex flex-col w-full items-start gap-2'>
           <div className='flex items-end justify-between w-full'>
             <div className='flex items-start flex-col gap-1'>

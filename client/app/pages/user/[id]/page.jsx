@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import Moment from 'react-moment';
 import AccountInfo from '@/app/components/AccountInfo';
 import { likeContext } from '@/app/context/LikeContext';
+import Link from 'next/link';
+import Loading from '@/app/components/Loading';
 const Page = (props) => {
     const id = props.params.id
     const [user, setUser] = useState({})
@@ -45,7 +47,7 @@ const Page = (props) => {
 
     return (
         <>
-        <AccountInfo name={user.name} bio={user.bio} info={info} nameProfile={user.nameProfile} date={user.createdAt} img={user?.profilePhoto?.url} />
+        <AccountInfo name={user.name} bio={user.bio} info={info} setInfo={setInfo} nameProfile={user.nameProfile} date={user.createdAt} img={user?.profilePhoto?.url} />
         <div className={`w-full min-h-[100vh] flex flex-col items-center gap-3`}>
             <div className='md:w-[650px] w-[80%] h-[100vh] p-5 rounded-[10px]'>
                 {   loading ?
@@ -99,13 +101,13 @@ const Page = (props) => {
                                                                     <span className='text-black text-sm'>{user.name}</span>
                                                                     <span className='text-secondary text-xs'>
                                                                     <Moment fromNow>
-                                                                    {post.createdAt}
+                                                                    {new Date(post.updatedAt) > new Date(post.createdAt) ? post.updatedAt : post.createdAt}
                                                                     </Moment></span>
                                                                 </div>
                                                             </div>
                                                             <span className='text-secondary'><BsThreeDots /></span>
                                                         </div>
-                                                        <span className='text-black text-sm w-[100%] text'>{post.content}</span>
+                                                        <Link href={`/pages/post/${post._id}`} className='text-black text-sm w-[100%] text'>{post.content}</Link>
                                                         <div className='flex flex-row items-center gap-6'>
                                                             <div onClick={ ()=> HandleLike(post._id) } className='option flex flex-row items-center gap-2'>
                                                                 <span className=''>
@@ -128,9 +130,8 @@ const Page = (props) => {
                                 </div>
                             </div>
                         </>
-                        :<div className='flex items-center justify-center w-full min-h-[100vh]'>
-                            <div className='w-[80px] itemanimate flex items-center justify-center h-[80px] border-[2px] border-primary rounded-full'></div>
-                        </div> 
+                        :
+                        <Loading />
                 }
             </div>
         </div>

@@ -7,13 +7,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Link from 'next/link';
-const Page = () => {
+const Page = ({ params }) => {
+    const {id ,token} = params
     const [password, setPassword] = useState("")
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!password) toast.error("All fields are required")
         else {
-            console.log(password)
+            axios.get(`http://localhost:3001/api/password/reset-password/${id}/${token}`, { password })
+            .then(res => {
+                console.log(res.data)
+                toast.success(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error(err.response)
+            })
         }
     }
     return (

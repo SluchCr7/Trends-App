@@ -116,6 +116,50 @@ const toggleLike = asyncHandler(async (req, res) => {
     res.status(200).json(post)
 }) 
 
+/**
+ * @desc Pin Post
+ * @route PUT /api/post/pin/:id
+ * @access private (only user logged)
+ * @method PUT
+ */
 
+const pinPost = asyncHandler(async (req, res) => {
+    let post = await Post.findById(req.params.id)
+    if (!post) {
+        return res.status(404).json({ message: "Post not found" })
+    }
 
-module.exports = { createPost , DeletePost  , getALLPosts, getPostById , toggleLike, UpdatePost}
+    const isPostPin = post.pinPost
+    if (!isPostPin) {
+        post = await Post.findByIdAndUpdate(req.params.id, {
+            $set: {
+                pinPost: true
+            }
+        }, { new: true })
+    }
+    res.status(200).json(post)
+})
+
+/**
+ * @desc UnPin Post
+ * @route PUT /api/post/unpin/:id
+ * @access private (only user logged)
+ * @method PUT
+ */
+
+const unPinPost = asyncHandler(async (req, res) => {
+    let post = await Post.findById(req.params.id)
+    if (!post) {
+        return res.status(404).json({ message: "Post not found" })
+    }
+    const isPostPin = post.pinPost
+    if (isPostPin) {
+        post = await Post.findByIdAndUpdate(req.params.id, {
+            $set: {
+                pinPost: false
+            }
+        }, { new: true })
+    }
+    res.status(200).json(post)
+})
+module.exports = { createPost , DeletePost  , getALLPosts, getPostById , toggleLike, UpdatePost , pinPost , unPinPost}

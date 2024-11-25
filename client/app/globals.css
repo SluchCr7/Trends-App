@@ -78,10 +78,7 @@
   }
 }
 .navLinks{
-  background-color: #bebdbd;
-  /* backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
-  border: 1px solid #bebdbd;
+
   border-radius: 10px;
   padding: 1.5rem;
   display: flex;
@@ -99,4 +96,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+::-webkit-scrollbar{
+  display: none;
 }

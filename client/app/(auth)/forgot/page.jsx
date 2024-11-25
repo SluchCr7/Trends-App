@@ -13,7 +13,19 @@ const Page = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!email) toast.error("All fields are required")
-        console.log(email)
+        else {
+            axios.post("http://localhost:3001/api/password/reset", {
+                email
+            })
+            .then(res => {
+                console.log(res.data)
+                toast.success(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error(err.response.data)
+            })
+        }
     }
     return (
         <>

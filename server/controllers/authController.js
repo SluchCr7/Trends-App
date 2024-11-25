@@ -70,29 +70,32 @@ const LoginUser = AsyncHandler(async (req, res) => {
         return res.status(400).send("Invalid email or password");
     }
 
-    // const validPassword = await bcrypt.compare(req.body.password, user.password);
-    // if (!validPassword) {
-    //     return res.status(400).send("Invalid email or password");
-    // }
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) {
+        return res.status(400).send("Invalid email or password");
+    }
 
-    // // Verify Account
-    // if (!user.isAccountVerified) {
-    //     let verifcationToken = await Verification.findOne({ userId: user._id })
-    //     if (!verifcationToken) {
-    //         verifcationToken = new Verification({
-    //             userId: user._id,
-    //             tokenVer : crypto.randomBytes(32).toString("hex")
-    //         })
-    //     }
-    //     const link = `http://localhost:3000/pages/users/${user._id}/verify/${verifcationToken.tokenVer}`
-    //     const htmlTemp = `
-    //         Verify your email by:
-    //         click in this link <a href=${link}>Verify</a> to verify your email
-    //         and go to the login page and start Shopping and enjoy
-    //     `
-    //     await sendEmail(user.email , "Verify your Email" , htmlTemp)
-    //     return res.status(400).send("Please Verify your Email");
-    // }
+    // check if user is verified
+    if (!user.isAccountVerified) {
+        let verificationToken = await Verification.findOne({
+            userId: user._id,
+        })
+        if (!verificationToken) {
+            verificationToken = new Verification({
+                userId: user._id,
+                tokenVer: crypto.randomBytes(32).toString('hex'),
+            })
+            await verificationToken.save()
+        }
+        const link = `${process.env.DOMAIN_NAME}/pages/users/${user._id}/verify/${verificationToken.tokenVer}`
+        const htmlTemp = `
+            Verify your email by:   
+            click in this link <a href=${link}>Verify</a> to verify your email
+            and go to the login page and start your journey with us
+        `
+        sendEmail(user.email, 'Verify Email', htmlTemp)
+        return res.status(400).send('Please verify your email')
+    }
 
     const token = jwt.sign({ _id: user._id , isAdmin: user.isAdmin }, process.env.TOKEN_SECRET);
     const { Password, ...others } = user._doc
@@ -273,25 +276,20 @@ const SavedPosts = AsyncHandler(async (req, res) => {
  */
 
 const verifyAccount = AsyncHandler(async (req, res) => {
-    const user = await User.findOne(req.params.id)
-    // console.log(user.params.id)
-    // console.log(user.params.userId)
+    const user = await User.findById(req.params.id)
     if (!user) {
-        return res.status(400).json({message : "invalid User"})
+        res.status(404)
+        throw new Error('User not found')
     }
-    const verificationToken = await Verification.findOne({
-        userId: user._id,
-        tokenVer : req.params.token
-    })
+    const verificationToken = await Verification.findOne({ userId: user._id , tokenVer: req.params.token })
     if (!verificationToken) {
-        return res.status(400).json({message : "invalid Link"})
+        res.status(404)
+        throw new Error('Verification token not found')
     }
-    // Verify Account
     user.isAccountVerified = true
     await user.save()
-    // remove verifcationToken by end date
-    await verificationToken.remove()
-    res.status(200).json({message : "Your account is Verified"})
+    await Verification.findByIdAndDelete(verificationToken._id)
+    res.status(200).json({ message: 'Email verified' })
 })
 
 

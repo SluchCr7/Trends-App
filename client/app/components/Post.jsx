@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CiHeart } from "react-icons/ci";
 import { FaRegComment } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
@@ -13,14 +13,18 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { likeContext } from '../context/LikeContext';
 import { Commentcontext } from '../context/CommentContext';
-const Post = ({_id , user , createdAt , content , likes , comments , index}) => {
+import { Postcontext } from '../context/PostContext';
+const Post = ({_id , user , createdAt , updatedAt,content , likes , comments }) => {
     const Userprofile = useSelector((state) => state.auth)
+    // const [trends, setTrends] = useState([])
+    const [postMenu ,setPostMenu] = useState(false)
     const [comment, setComment] = useState(false)
     const [commentContent, setCommentContent] = useState("")
     const {HandleLike} = useContext(likeContext)
-    const {AddComment} = useContext(Commentcontext)
-  return (
-        <div className='w-[80%] lg:w-[600px] p-2 transition-all duration-700 rounded-lg post flex flex-col items-start mt-[20px] border-b-[1px] pb-3 border-white/10' key={index}>
+    const { AddComment } = useContext(Commentcontext)
+    const {pinTrend , trends} = useContext(Postcontext)
+return (
+        <div className='w-[80%] lg:w-[600px] p-2 transition-all duration-700 rounded-lg post flex flex-col items-start mt-[20px] border-b-[1px] pb-3 border-white/10'>
             <div className='flex flex-row items-start gap-4 w-full'>
             <Image src={user.profilePhoto.url} width={100} height={100} className='w-[45px] h-[45px] rounded-full' />
             <div className='w-full flex flex-col items-start gap-3'>
@@ -32,18 +36,23 @@ const Post = ({_id , user , createdAt , content , likes , comments , index}) => 
                                 {user.name}
                             </Link>
                             <span className='text-[#797979] text-sm'>
-                                <Moment fromNow>{createdAt}</Moment>
+                                {new Date(updatedAt) > new Date(createdAt)
+                                    ?
+                                    <Moment fromNow>{updatedAt}</Moment>
+                                    :
+                                    <Moment fromNow>{createdAt}</Moment>
+                                    }
                             </span>
                         </div>  
                     </div>
-                    {/* <div className='relative'>
+                    <div className='relative'>
                         <span onClick={()=> setPostMenu(!postMenu)} className='text-lg text-primary'><BsThreeDots /></span>
                         <div className={`${postMenu ? "flex" : "hidden"}`}>
-                            <PostMenu />
+                            <PostMenu _id={_id} user={user} />
                         </div>
-                    </div> */}
+                    </div>
                 </div>
-                <Link href={`/pages/post/${_id}`} className='text-black text-sm w-[100%] text'>{content}</Link>
+                <Link href={`/pages/post/${_id}`} className={`text-black text-sm w-[100%] ${content.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/)?"text": ""}`}>{content}</Link>
                 {
                     
                     <div className='flex flex-row items-center gap-5 mt-3'>

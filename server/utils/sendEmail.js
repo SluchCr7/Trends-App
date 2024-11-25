@@ -9,14 +9,12 @@ const sendEmail = async(useremail , subject , htmlTemplet) => {
                 pass : process.env.EMAIL_APP_PASS
             }
         })
-        const emailoptions = {
-            from: process.env.EMAIL_NAME, // sender
+        await transporter.sendMail({
+            from: process.env.EMAIL_NAME,
             to: useremail,
             subject: subject,
-            html : htmlTemplet
-        }
-        const info = await transporter.sendMail(emailoptions)
-        console.log("email send success" + info)
+            text: htmlTemplet
+        })
     } catch (error) {
         console.log(error)
         throw new Error("Server Error (nodeMail)")

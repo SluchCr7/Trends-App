@@ -17,14 +17,14 @@ const Homecontent = ({ children }) => {
   const [display, setDisplay] = useState(false)
   const [login, setLogin] = useState(false)
   const [register , setRegister] = useState(false)
-  useEffect(() => {
-    if(window.location.href === "http://localhost:3000/pages/dashboard" || window.location.href === "http://localhost:3000/pages/dashboard/pages/user" || window.location.href === "http://localhost:3000/pages/dashboard/pages/posts" || window.location.href === "http://localhost:3000/pages/dashboard/pages/comments") {
-      setDisplay(true)
-    }
-    else {
-      setDisplay(false)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(window.location.href === "http://localhost:3000/pages/dashboard" || window.location.href === "http://localhost:3000/pages/dashboard/pages/user" || window.location.href === "http://localhost:3000/pages/dashboard/pages/posts" || window.location.href === "http://localhost:3000/pages/dashboard/pages/comments") {
+  //     setDisplay(true)
+  //   }
+  //   else {
+  //     setDisplay(false)
+  //   }
+  // }, [])
   return (
     <div>
       <Provider store={store}>

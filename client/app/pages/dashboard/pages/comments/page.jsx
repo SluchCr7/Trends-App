@@ -1,42 +1,34 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import Image from 'next/image'
 import Moment from 'react-moment'
 import { MdDelete } from "react-icons/md";
 import { useSelector } from 'react-redux'
+import { Commentcontext } from '@/app/context/CommentContext'
 const Page = () => {
-    const [Comments , setComments] = useState([])
-    const {user} = useSelector(state => state.auth)
-    useEffect(() => {
-        axios.get("http://localhost:3001/api/comment")
-            .then(res => {
-                setComments(res.data)
-                console.log(res.data)
-                
-            })
-            .catch(err => console.log(err))
-    }, [Comments])
-    const deleteComment = (id) => {
-    axios.delete(`http://localhost:3001/api/comment/${id}`, {
-      headers: {
-          Authorization : `Bearer ${user.token}`
-      }
-      })
-      .then((res) => {
-          console.log("deleted Succesfully")
-          window.location.reload()
-      })
-      .catch(err=> console.log(err))
-    }
+  const { user } = useSelector(state => state.auth)
+  const {Comments , deleteComment} = useContext(Commentcontext)
+  // const deleteComment = (id) => {
+  //   axios.delete(`http://localhost:3001/api/comment/${id}`, {
+  //     headers: {
+  //         Authorization : `Bearer ${user.token}`
+  //     }
+  //     })
+  //     .then((res) => {
+  //         console.log("deleted Succesfully")
+  //         window.location.reload()
+  //     })
+  //     .catch(err=> console.log(err))
+  //   }
   return (
-    <div className='w-[100%] min-h-[100vh] flex flex-col items-start pl-[14%] pt-8'>
+    <div className='w-[100%] min-h-[100vh] flex flex-col items-center md:items-start md:pl-[14%] pt-8'>
         <span className='textheading text-primary font-black text-xl uppercase'>Comments</span>
-        <div className='Comments mt-2 grid grid-cols-3 gap-3'>
+        <div className='Comments mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
           {
             Comments.map((comment) => {
               return (
-                <div className='flex w-[400px] border-[1px] border-primary p-3 flex-row items-start gap-3' key={comment._id}>
+                <div className='flex w-[80%] mx-auto md:w-[400px] border-[1px] border-primary p-3 flex-row items-center md:items-start gap-3' key={comment._id}>
                   <Image src={comment.user.profilePhoto.url} width={100} height={100} alt='photo' className='w-[50px] h-[50px] rounded-full'/>
                   <div className=' flex items-start flex-col gap-2'>
                     <div className='flex items-start flex-col gap-1'>

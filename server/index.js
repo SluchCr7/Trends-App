@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/post", require("./routes/post"));
 app.use("/api/comment" , require("./routes/comment"))
-
+app.use("/api/password" , require("./routes/Password"))
 
 // Error Handler Must after routes
 app.use(errorhandler);
